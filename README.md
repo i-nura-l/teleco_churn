@@ -35,6 +35,8 @@ python ai_agent.py
 
 You can also import `ask_question()` in another script and pass your own natural-language question.
 
+For a notebook workflow, open `teleco_churn_qna.ipynb` and run the question cell there.
+
 The sample question in `ai_agent.py` now uses a fast SQL path for common analytics questions, so it can answer directly from MySQL without consuming a Gemini request. Repeated questions are cached in `.ai_agent_cache.json`.
 
 ## Environment variables
