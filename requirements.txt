@@ -3,4 +3,7 @@ sqlalchemy
 python-dotenv
 langchain
 langchain-community
-langchain-google-genai
+langchain-groq
+groq
+fastapi
+uvicorn

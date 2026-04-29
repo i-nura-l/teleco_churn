@@ -1,6 +1,6 @@
-# Telco Churn MySQL + AI Agent
+# Telco Churn MySQL + Groq SQL Agent
 
-This project connects VS Code Python code directly to MySQL and then uses a LangChain SQL agent to answer questions from the live database.
+This project connects VS Code Python code directly to MySQL and then uses a LangChain SQL agent powered by Groq to answer questions from the live database.
 
 ## Setup
 
@@ -37,7 +37,32 @@ You can also import `ask_question()` in another script and pass your own natural
 
 For a notebook workflow, open `teleco_churn_qna.ipynb` and run the question cell there.
 
-The sample question in `ai_agent.py` now uses a fast SQL path for common analytics questions, so it can answer directly from MySQL without consuming a Gemini request. Repeated questions are cached in `.ai_agent_cache.json`.
+## Run the local chat API
+
+Start the API server:
+
+```bash
+uvicorn chat_api:app --reload
+```
+
+API endpoints:
+
+- `GET /health`
+- `POST /chat` with JSON body: `{ "question": "your question" }`
+
+## GitHub Pages chat UI
+
+The `docs/` folder contains a static dashboard-plus-chat frontend that can be deployed to GitHub Pages.
+
+1. Push this repository to GitHub.
+2. In repository settings, enable Pages and set source to `Deploy from branch`.
+3. Choose branch `main` and folder `/docs`.
+4. Open the published Pages URL.
+5. Set `API Base URL` in the UI to your deployed API endpoint.
+
+Important: GitHub Pages can only host static files, so the Python API must run somewhere else (for example Render, Railway, Fly.io, Azure, or your own server).
+
+The frontend uses `GET /health`, `GET /stats`, and `POST /chat` from `chat_api.py`.
 
 ## Environment variables
 
@@ -46,5 +71,5 @@ The sample question in `ai_agent.py` now uses a fast SQL path for common analyti
 - `MYSQL_USER`
 - `MYSQL_PASSWORD`
 - `MYSQL_DATABASE`
-- `GOOGLE_API_KEY`
-- `GOOGLE_MODEL`
+- `GROQ_API_KEY`
+- `GROQ_MODEL`

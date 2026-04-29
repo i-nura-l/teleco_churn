@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 from langchain_community.agent_toolkits import create_sql_agent
 from langchain_community.utilities import SQLDatabase
-from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_groq import ChatGroq
 from sqlalchemy.exc import SQLAlchemyError
 
 from db_config import get_database_url
@@ -13,15 +13,15 @@ load_dotenv()
 
 
 def build_agent():
-    api_key = os.getenv("GOOGLE_API_KEY")
+    api_key = os.getenv("GROQ_API_KEY")
     if not api_key:
-        raise ValueError("Set GOOGLE_API_KEY in your environment or .env file.")
+        raise ValueError("Set GROQ_API_KEY in your environment or .env file.")
 
     database = SQLDatabase.from_uri(get_database_url())
-    llm = ChatGoogleGenerativeAI(
-        model=os.getenv("GOOGLE_MODEL", "gemini-2.5-flash"),
+    llm = ChatGroq(
+        model=os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile"),
         temperature=0,
-        google_api_key=api_key,
+        api_key=api_key,
     )
 
     return create_sql_agent(llm=llm, db=database, verbose=True)

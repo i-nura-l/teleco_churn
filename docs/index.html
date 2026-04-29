@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Telco Churn Insights</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Telco Intelligence</p>
+          <h1>Dashboard plus chat for churn analysis</h1>
+          <p>
+            Browse live metrics, inspect churn drivers, then ask follow-up questions in chat.
+          </p>
+        </div>
+
+        <div class="hero-meta">
+          <span id="connectionPill" class="status-pill status-waiting">Waiting for API</span>
+          <label for="apiBaseUrl">API Base URL</label>
+          <div class="api-row">
+            <input id="apiBaseUrl" type="url" placeholder="https://your-api-host.com" />
+            <button id="refreshBtn" type="button">Refresh</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="layout">
+        <section class="dashboard-panel">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Overview</p>
+              <h2>Live churn metrics</h2>
+            </div>
+            <span id="topRiskSegment" class="top-risk">Loading insights...</span>
+          </div>
+
+          <div id="statsCards" class="stats-grid" aria-live="polite"></div>
+
+          <div class="charts-grid">
+            <article class="chart-card">
+              <div class="chart-head">
+                <h3>Churn by Internet Service</h3>
+                <p>Which connection type is riskiest?</p>
+              </div>
+              <canvas id="internetChart" height="180"></canvas>
+            </article>
+
+            <article class="chart-card">
+              <div class="chart-head">
+                <h3>Churn by Contract</h3>
+                <p>Compare long-term and month-to-month retention.</p>
+              </div>
+              <canvas id="contractChart" height="180"></canvas>
+            </article>
+
+            <article class="chart-card">
+              <div class="chart-head">
+                <h3>Churn by Tenure Band</h3>
+                <p>How quickly do customers leave?</p>
+              </div>
+              <canvas id="tenureChart" height="180"></canvas>
+            </article>
+
+            <article class="insight-card">
+              <div class="chart-head">
+                <h3>Prompt starters</h3>
+                <p>Click any prompt to move it into chat.</p>
+              </div>
+              <div id="promptChips" class="chip-row"></div>
+              <ul id="insightList" class="insight-list"></ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="chat-card">
+          <div class="section-head chat-head">
+            <div>
+              <p class="eyebrow">Chat</p>
+              <h2>Ask the Groq agent</h2>
+            </div>
+            <button id="clearBtn" type="button" class="ghost-btn">Clear</button>
+          </div>
+
+          <div id="messages" class="messages" aria-live="polite"></div>
+
+          <form id="chatForm" class="composer">
+            <textarea
+              id="question"
+              rows="4"
+              placeholder="Example: Find the churn rate for each type of InternetService. Which one is highest?"
+              required
+            ></textarea>
+            <button id="sendBtn" type="submit">Ask</button>
+          </form>
+        </section>
+      </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
