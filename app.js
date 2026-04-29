@@ -212,9 +212,9 @@ async function loadDashboard() {
 
     renderStatCards(stats.cards || []);
     renderInsightList(stats);
-    renderBarChart("internetChart", formatCategoryRows(stats.internet_service || []), "rgba(15, 85, 109, 0.82)", "Internet service churn");
-    renderBarChart("contractChart", formatCategoryRows(stats.contract || []), "rgba(214, 97, 0, 0.82)", "Contract churn");
-    renderBarChart("tenureChart", formatCategoryRows(stats.tenure_band || []), "rgba(67, 126, 96, 0.82)", "Tenure churn");
+    renderBarChart("internetChart", formatCategoryRows(stats.internet_service || []), "rgba(162, 134, 255, 0.88)", "Internet service churn");
+    renderBarChart("contractChart", formatCategoryRows(stats.contract || []), "rgba(118, 100, 255, 0.88)", "Contract churn");
+    renderBarChart("tenureChart", formatCategoryRows(stats.tenure_band || []), "rgba(85, 72, 204, 0.88)", "Tenure churn");
 
     setConnectionStatus("ready", "API connected");
   } catch (error) {
@@ -225,7 +225,11 @@ async function loadDashboard() {
         <span class="stat-value">Check backend</span>
       </article>
     `;
-    insightListEl.innerHTML = `<li>${error.message}</li>`;
+    insightListEl.innerHTML = `
+      <li>${error.message}</li>
+      <li>Start the FastAPI backend and point the API Base URL at it.</li>
+      <li>Make sure GROQ_API_KEY and the MySQL settings in .env are valid.</li>
+    `;
     topRiskSegmentEl.textContent = "Waiting for API data";
   }
 }
@@ -286,7 +290,7 @@ form.addEventListener("submit", async (event) => {
 
 addMessage(
   "bot",
-  "Ready. Load the dashboard, then ask a question about churn."
+  "Ready. Point API Base URL at the FastAPI backend, then ask a question. The backend needs a working MySQL connection and GROQ_API_KEY."
 );
 
 renderPromptChips();
